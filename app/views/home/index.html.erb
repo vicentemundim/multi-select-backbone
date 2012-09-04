@@ -1,0 +1,36 @@
+<h1>Multi-Select Example</h1>
+<p>This is a basic example of a multi-select component using <%= link_to "Backbone.js", "http://backbonejs.org" %></p>
+
+<div class="multi-select">
+  <div class="available" data-available="<%= @available_movies.to_json %>">
+    <h2>Available movies</h2>
+
+    <ul>
+    </ul>
+
+    <script type="text/html">
+      <%% _(movies).each(function (movie) { %>
+      <li data-id="<%%= movie.id %>">
+        <%%= movie.title %> - <%%= movie.year %>
+        <%= link_to "add", '#', class: 'add pullRight' %>
+      </li>
+      <%% }) %>
+    </script>
+  </div>
+
+  <div class="selected">
+    <h2>Favorite Movies</h2>
+
+    <ul>
+    </ul>
+
+    <script type="text/html">
+      <%% _(movies).each(function (movie) { %>
+      <li data-id="<%%= movie.id %>">
+        <%%= movie.title %> - <%%= movie.year %>
+        <%= link_to "remove", '#', class: 'remove pullRight' %>
+      </li>
+      <%% }) %>
+    </script>
+  </div>
+</div>
