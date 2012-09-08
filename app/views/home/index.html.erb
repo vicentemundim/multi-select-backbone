@@ -1,9 +1,7 @@
-<% content_for :body_class, 'enable-multi-select' %>
-
 <h1>Multi-Select Example</h1>
 <p>This is a basic example of a multi-select component using <%= link_to "Backbone.js", "http://backbonejs.org" %></p>
 
-<div class="multi-select">
+<div class="multi-select" data-enable-multi-select>
   <div class="available" data-available="<%= @available_movies.to_json %>">
     <h2>Available movies</h2>
 

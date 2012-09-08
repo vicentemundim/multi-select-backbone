@@ -17,9 +17,9 @@
 //= require_tree .
 
 $(function () {
-  $('.enable-multi-select').each(function () {
+  $('[data-enable-multi-select]').each(function () {
     window.multiSelect = new MultiSelect({
-      el: $('.multi-select'),
+      el: $(this),
       available: new Movies,
       selected: new FavoriteMovies
     })
