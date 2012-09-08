@@ -15,3 +15,11 @@
 //= require backbone
 //= require backbone.localStorage
 //= require_tree .
+
+$(function () {
+  window.multiSelect = new MultiSelect({
+    el: $('.multi-select'),
+    available: new Movies,
+    selected: new FavoriteMovies
+  })
+})

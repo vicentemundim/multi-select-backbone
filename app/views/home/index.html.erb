@@ -9,7 +9,7 @@
     </ul>
 
     <script type="text/html">
-      <%% _(movies).each(function (movie) { %>
+      <%% _(collection).each(function (movie) { %>
       <li data-id="<%%= movie.id %>">
         <%%= movie.title %> - <%%= movie.year %>
         <%= link_to "add", '#', class: 'add pullRight' %>
@@ -25,7 +25,7 @@
     </ul>
 
     <script type="text/html">
-      <%% _(movies).each(function (movie) { %>
+      <%% _(collection).each(function (movie) { %>
       <li data-id="<%%= movie.id %>">
         <%%= movie.title %> - <%%= movie.year %>
         <%= link_to "remove", '#', class: 'remove pullRight' %>

@@ -1,34 +1,3 @@
-var Movie = Backbone.Model.extend({})
-
-var Movies = Backbone.Collection.extend({
-  model: Movie,
-  comparator: function (model) {
-    return model.get('title')
-  }
-})
-
-var FavoriteMovies = Backbone.Collection.extend({
-  localStorage: new Backbone.LocalStorage('favorite-movies'),
-  model: Movie,
-
-  initialize: function () {
-    this.on('add',    this.added, this)
-    this.on('remove', this.removed, this)
-  },
-
-  comparator: function (model) {
-    return model.get('title')
-  },
-
-  added: function (model) {
-    model.save()
-  },
-
-  removed: function (model) {
-    model.destroy()
-  }
-})
-
 var AvailableView = Backbone.View.extend({
   events: {
     "click .add": 'add'
@@ -45,15 +14,15 @@ var AvailableView = Backbone.View.extend({
   },
 
   render: function () {
-    this.$('ul').html(this.template({movies: this.collection.toJSON()}))
+    this.$('ul').html(this.template({collection: this.collection.toJSON()}))
   },
 
   add: function (event) {
-    var movie = this.collection.get($(event.currentTarget).parents('li').data('id'))
+    var model = this.collection.get($(event.currentTarget).parents('li').data('id'))
 
     event.preventDefault()
 
-    this.trigger('multi-select:add', movie)
+    this.trigger('multi-select:add', model)
   }
 })
 
@@ -73,22 +42,22 @@ var SelectedView = Backbone.View.extend({
   },
 
   render: function () {
-    this.$('ul').html(this.template({movies: this.collection.toJSON()}))
+    this.$('ul').html(this.template({collection: this.collection.toJSON()}))
   },
 
   remove: function (event) {
-    var movie = this.collection.get($(event.currentTarget).parents('li').data('id'))
+    var model = this.collection.get($(event.currentTarget).parents('li').data('id'))
 
     event.preventDefault()
 
-    this.trigger('multi-select:remove', movie)
+    this.trigger('multi-select:remove', model)
   }
 })
 
 var MultiSelect = Backbone.View.extend({
   initialize: function () {
-    this.available = new Movies
-    this.selected = new FavoriteMovies
+    this.available = this.options.available
+    this.selected = this.options.selected
 
     this.selected.on('reset', this.updateAvailable, this)
 
@@ -117,10 +86,4 @@ var MultiSelect = Backbone.View.extend({
     this.selected.remove(model)
     this.available.add(model)
   }
-})
-
-$(function () {
-  window.multiSelect = new MultiSelect({
-    el: $('.multi-select')
-  })
 })
