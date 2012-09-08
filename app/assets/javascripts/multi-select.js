@@ -1,57 +1,55 @@
 (function (window) {
-  var AvailableView = Backbone.View.extend({
+  var BaseContainerView = Backbone.View.extend({
+    initialize: function () {
+      this.template = _(this.$('script').html()).template()
+
+      this.collection.on('reset',  this.render, this)
+      this.collection.on('remove', this.render, this)
+      this.collection.on('add',    this.render, this)
+
+      this.setup()
+    },
+
+    setup: function () {
+      // reimplement this
+    },
+
+    render: function () {
+      this.$('ul').html(this.template({collection: this.collection.toJSON()}))
+    },
+
+    retrieveModelFrom: function (target) {
+      return this.collection.get($(target).parents('li').data('id'))
+    }
+  })
+
+  var AvailableView = BaseContainerView.extend({
     events: {
       "click .add": 'add'
     },
 
-    initialize: function () {
-      this.template = _(this.$('script').html()).template()
-
-      this.collection.on('reset',  this.render, this)
-      this.collection.on('remove', this.render, this)
-      this.collection.on('add',    this.render, this)
-
+    setup: function () {
       this.collection.reset(this.$el.data('available'))
     },
 
-    render: function () {
-      this.$('ul').html(this.template({collection: this.collection.toJSON()}))
-    },
-
     add: function (event) {
-      var model = this.collection.get($(event.currentTarget).parents('li').data('id'))
-
       event.preventDefault()
-
-      this.trigger('multi-select:add', model)
+      this.trigger('multi-select:add', this.retrieveModelFrom(event.currentTarget))
     }
   })
 
-  var SelectedView = Backbone.View.extend({
+  var SelectedView = BaseContainerView.extend({
     events: {
       "click .remove": 'remove'
     },
 
-    initialize: function () {
-      this.template = _(this.$('script').html()).template()
-
-      this.collection.on('reset',  this.render, this)
-      this.collection.on('remove', this.render, this)
-      this.collection.on('add',    this.render, this)
-
+    setup: function () {
       this.collection.fetch()
     },
 
-    render: function () {
-      this.$('ul').html(this.template({collection: this.collection.toJSON()}))
-    },
-
     remove: function (event) {
-      var model = this.collection.get($(event.currentTarget).parents('li').data('id'))
-
       event.preventDefault()
-
-      this.trigger('multi-select:remove', model)
+      this.trigger('multi-select:remove', this.retrieveModelFrom(event.currentTarget))
     }
   })
 
