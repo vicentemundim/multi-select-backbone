@@ -1,0 +1,29 @@
+<div class="multi-select">
+  <div class="available" data-available='[{"id": 1, "title": "A title"}, {"id": 2, "title": "Other title"}]'>
+    <ul>
+    </ul>
+
+    <script type="text/html">
+      <% _(collection).each(function (model) { %>
+        <li data-id="<%= model.id %>">
+          <span><%= model.title %></span>
+          <a href="#" class="add">add</a>
+        </li>
+      <% }) %>
+    </script>
+  </div>
+
+  <div class="selected">
+    <ul>
+    </ul>
+
+    <script type="text/html">
+      <% _(collection).each(function (model) { %>
+        <li data-id="<%= model.id %>">
+          <span><%= model.title %></span>
+          <a href="#" class="remove">remove</a>
+        </li>
+      <% }) %>
+    </script>
+  </div>
+</div>
