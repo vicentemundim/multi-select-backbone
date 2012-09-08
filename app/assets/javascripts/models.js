@@ -1,30 +1,37 @@
-var Movie = Backbone.Model.extend({})
+(function (window) {
+  var Movie = Backbone.Model.extend({})
 
-var Movies = Backbone.Collection.extend({
-  model: Movie,
-  comparator: function (model) {
-    return model.get('title')
-  }
-})
+  var Movies = Backbone.Collection.extend({
+    model: Movie,
 
-var FavoriteMovies = Backbone.Collection.extend({
-  localStorage: new Backbone.LocalStorage('favorite-movies'),
-  model: Movie,
+    comparator: function (model) {
+      return model.get('title')
+    }
+  })
 
-  initialize: function () {
-    this.on('add',    this.added, this)
-    this.on('remove', this.removed, this)
-  },
+  var FavoriteMovies = Backbone.Collection.extend({
+    localStorage: new Backbone.LocalStorage('favorite-movies'),
+    model: Movie,
 
-  comparator: function (model) {
-    return model.get('title')
-  },
+    initialize: function () {
+      this.on('add',    this.added, this)
+      this.on('remove', this.removed, this)
+    },
 
-  added: function (model) {
-    model.save()
-  },
+    comparator: function (model) {
+      return model.get('title')
+    },
 
-  removed: function (model) {
-    model.destroy()
-  }
-})
+    added: function (model) {
+      model.save()
+    },
+
+    removed: function (model) {
+      model.destroy()
+    }
+  })
+
+  window.Movie = Movie
+  window.Movies = Movies
+  window.FavoriteMovies = FavoriteMovies
+})(window)

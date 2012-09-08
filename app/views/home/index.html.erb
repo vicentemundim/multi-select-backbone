@@ -1,3 +1,5 @@
+<% content_for :body_class, 'enable-multi-select' %>
+
 <h1>Multi-Select Example</h1>
 <p>This is a basic example of a multi-select component using <%= link_to "Backbone.js", "http://backbonejs.org" %></p>
 
@@ -12,7 +14,7 @@
       <%% _(collection).each(function (movie) { %>
       <li data-id="<%%= movie.id %>">
         <%%= movie.title %> - <%%= movie.year %>
-        <%= link_to "add", '#', class: 'add pullRight' %>
+        <%= link_to "add", '#', class: 'add' %>
       </li>
       <%% }) %>
     </script>
@@ -28,7 +30,7 @@
       <%% _(collection).each(function (movie) { %>
       <li data-id="<%%= movie.id %>">
         <%%= movie.title %> - <%%= movie.year %>
-        <%= link_to "remove", '#', class: 'remove pullRight' %>
+        <%= link_to "remove", '#', class: 'remove' %>
       </li>
       <%% }) %>
     </script>
